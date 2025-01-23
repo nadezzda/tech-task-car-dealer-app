@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Car Dealer App - Front-end JS Engineer Test Assessment
+
+This project is a solution to the front-end test assessment for creating a Car Dealer App using Next.js. The app allows users to filter vehicles by type and model year, and view the results on a separate page.
+
+## Features
+- Filter vehicles by make and model year.
+- Display a list of vehicle models based on selected filters.
+- Use of Next.js for static generation and server-side rendering.
+- Styling with Tailwind CSS for responsive design.
+- Full TypeScript support for type safety.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
+
+Clone this repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/nadezzda/tech-task-car-dealer-app
+cd car-dealer-app
+npm install
+```
+
+
+### 2. Run the Development Server
+
+To start the development server, run the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To create a production build, run:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+This will generate the optimized build for production in the .next directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Start the Production Server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To start the production server after building, run:
 
-## Deploy on Vercel
+```bash
+npm start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app will be available at http://localhost:3000.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Create Environment Variables
+Create a .env.local file in the root directory. This file is added to the repository and contain API URL. 
+
+
+### 6. Application Architecture
+
+The application follows a modular structure to ensure scalability and maintainability. Below is an overview of the folder structure:
+
+#### `src/` Directory Structure:
+
+- **`components/`**  
+    This folder contains reusable UI components that are used throughout the application. Components are designed to be modular and small in size for easy testing and reusability.
+    
+
+- **`app/`**  
+    The `app` folder contains the main application logic and page components. It is responsible for routing and rendering the core pages of the application.
+
+- **`types/`**  
+    This folder holds TypeScript types and interfaces used throughout the application to ensure type safety and improve code maintainability.
+
+- **`lib/`**  
+    The `lib` folder is used for utility functions, API calls, and other reusable logic. This keeps business logic separate from UI components.
+
+### Data Flow
+1. **Filter Page:**
+    - On the filter page, the app fetches available vehicle makes from the VPIC API and populates a dropdown.
+    - Another dropdown allows users to select a model year from 2015 to the current year.
+    - When both a make and a year are selected, the "Next" button is enabled, allowing navigation to the result page.
+
+2. **Result Page:**
+    - On the result page, the selected vehicle make and model year are passed as URL parameters.
+    - The `generateStaticParams` function is used to pre-render paths for all possible make/year combinations.
+    - The app fetches vehicle models using the selected make ID and model year from the VPIC API.
+    - The models are displayed, and error handling is in place to inform the user if something goes wrong.
+
+3. **React Suspense:**
+    - The app uses React's `Suspense` component to manage loading states while fetching data, providing a smooth user experience.
+
